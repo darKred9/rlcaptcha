@@ -1,0 +1,3 @@
+[submodule "captcha_gen/l_captcha"]
+	path = captcha_gen/l_captcha
+	url = https://github.com/lepture/captcha
