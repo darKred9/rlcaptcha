@@ -46,25 +46,51 @@ class ImageCaptcha:
     :param font_sizes: Random choose a font size from this parameters.
     """
     lookup_table: list[int] = [int(i * 1.97) for i in range(256)]
-    character_offset_dx: tuple[int, int] = (0, 4)
-    character_offset_dy: tuple[int, int] = (0, 6)
-    character_rotate: tuple[int, int] = (-30, 30)
+    character_offset_dx: tuple[int, int] = (0, 4) # char position
+    character_offset_dy: tuple[int, int] = (0, 6) # char position
+    character_rotate: tuple[int, int] = (-30, 30) # rotation angle range
     character_warp_dx: tuple[float, float] = (0.1, 0.3)
     character_warp_dy: tuple[float, float] = (0.2, 0.3)
-    word_space_probability: float = 0.5
+    word_space_probability: float = 0.5 # how likely a space character is inserted between each character
     word_offset_dx: float = 0.25
+
+    char_font_color_N: ColorTuple = None # default: random: not used
+    noise_dots_color_N: ColorTuple = None # default: random: not used
+    noise_curve_color_N: ColorTuple = None # default: random: not used
+    
+    noise_dots_thickness_N: int = 3
+    noise_dots_number_N: int = 30
 
     def __init__(
             self,
             width: int = 160,
             height: int = 60,
             fonts: list[str] | None = None,
-            font_sizes: tuple[int, ...] | None = None):
+            font_sizes: tuple[int, ...] | None = None,
+            char_font_color: ColorTuple = None,
+            noise_dots_color: ColorTuple = None,
+            noise_curve_color: ColorTuple = None,
+            noise_dots_thickness: int = 3, # default value recommended by the author
+            noise_dots_number: int = 30,
+            char_spacing: float = 0.5,
+            rotation_angle: int = 30 # -> tuple[int, int] = (30, 30)
+            ):
         self._width = width
         self._height = height
+        
         self._fonts = fonts or DEFAULT_FONTS
         self._font_sizes = font_sizes or (42, 50, 56)
         self._truefonts: list[FreeTypeFont] = []
+
+        self.char_font_color_N = char_font_color
+        self.noise_dots_color_N = noise_dots_color 
+        self.noise_curve_color_N = noise_curve_color
+
+        self.noise_dots_thickness_N = noise_dots_thickness # done
+        self.noise_dots_number_N = noise_dots_number # done
+
+        self.word_space_probability = char_spacing # done
+        self.character_rotate = (rotation_angle, rotation_angle) # done
 
     @property
     def truefonts(self) -> list[FreeTypeFont]:
@@ -77,25 +103,30 @@ class ImageCaptcha:
         ]
         return self._truefonts
 
-    @staticmethod
-    def create_noise_curve(image: Image, color: ColorTuple) -> Image:
+    @staticmethod # means the function has nothing to do with the "self"
+    def create_noise_curve(image: Image, color: ColorTuple) -> Image: # draw a noise curve for each call of this function
         w, h = image.size
         x1 = secrets.randbelow(int(w / 5) + 1)
         x2 = secrets.randbelow(w - int(w / 5) + 1) + int(w / 5)
         y1 = secrets.randbelow(h - 2 * int(h / 5) + 1) + int(h / 5)
         y2 = secrets.randbelow(h - y1 - int(h / 5) + 1) + y1
         points = [x1, y1, x2, y2]
-        end = secrets.randbelow(41) + 160
-        start = secrets.randbelow(21)
+        end = secrets.randbelow(41) + 160 # set the ending angle for the arc
+        start = secrets.randbelow(21) # set the starting angle for the arc
         Draw(image).arc(points, start, end, fill=color)
         return image
 
-    @staticmethod
     def create_noise_dots(
+            self,
             image: Image,
-            color: ColorTuple,
-            width: int = 3,
-            number: int = 30) -> Image:
+            color: ColorTuple, # color for the dots
+            # width: int = 3, # thickness of each dots
+            # number: int = 30
+            ) -> Image: # how many dots will be added
+        
+        number = self.noise_dots_number_N
+        width = self.noise_dots_thickness_N
+
         draw = Draw(image)
         w, h = image.size
         while number:
