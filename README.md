@@ -1,9 +1,4 @@
-# rlcaptcha
-
-- AI solver: https://github.com/DrMahdiRezaei/Deep-CAPTCHA
-- Captcha generator: https://github.com/lepture/captcha
-    - Free fonts: https://www.1001freefonts.com
-
+# RL Captcha
 
 ## Our version of the CAPTCHA generator
 
@@ -18,3 +13,7 @@ image = ImageCaptcha(
     )
 ```
 
+## Reference
+- AI solver: https://github.com/DrMahdiRezaei/Deep-CAPTCHA
+- Original Captcha generator: https://github.com/lepture/captcha
+- Free fonts: https://www.1001freefonts.com
