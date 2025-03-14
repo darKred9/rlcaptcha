@@ -5,7 +5,7 @@
     - Free fonts: https://www.1001freefonts.com
 
 
-## Our version of Captcha generator
+## Our version of the CAPTCHA enerator
 
 - example: rlcaptcha/captcha_generator/captcha_main/tests/captcha1.py
 ``` python
