@@ -13,6 +13,12 @@ image = ImageCaptcha(
     )
 ```
 
+## Miscellaneous
+
+- Do `pip install --upgrade Pillow` before using the capatcha generator.
+
+
+
 ## Reference
 - AI solver: https://github.com/DrMahdiRezaei/Deep-CAPTCHA
 - Original Captcha generator: https://github.com/lepture/captcha
