@@ -19,18 +19,14 @@ image = ImageCaptcha(
     char_spacing=0.0 # between 0.0-1.0: 1.0 means no space.
     )
 
-data = image.generate('hello')
 image.write('hello', output_path)
 
 
 # test for basic recognization
 
-import keras_ocr
+import pytesseract
+from PIL import Image
 
-pipeline = keras_ocr.pipeline.Pipeline()
-images = [keras_ocr.tools.read(output_path)]
-prediction_groups = pipeline.recognize(images)
-
-for text, box in prediction_groups[0]:
-    print(text)
-
+image = Image.open(output_path)
+text = pytesseract.image_to_string(image)
+print(f"this is the text: >{text}<")
