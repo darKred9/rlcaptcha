@@ -13,11 +13,14 @@ image = ImageCaptcha(
     )
 ```
 
-## Miscellaneous
+## How to run
 
-- Do `pip install --upgrade Pillow` before using the capatcha generator.
+``` bash
+docker build -t captchaAI-gpu .
+./rundocker.sh 
+```
 
-
+- mounting point: current dir -> `/workplace` in docker
 
 ## Reference
 - AI solver: https://github.com/DrMahdiRezaei/Deep-CAPTCHA

@@ -4,4 +4,6 @@ docker run -it --rm \
   -v $(pwd):/workspace \
   -p 8888:8888 \
   --name ocr-container \
-  ocr-gpu bash
+  --entrypoint /bin/bash \
+  ocr-gpu \
+  -c "pip install --root-user-action=ignore pytesseract && apt-get update && apt-get install -y tesseract-ocr && bash"
