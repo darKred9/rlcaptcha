@@ -7,7 +7,6 @@ TEST_DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.dirname(TEST_DIR))
 
 
-
 # test for utils
 from utils.path_utils import get_path_from_project_root
 
@@ -30,13 +29,3 @@ image = ImageCaptcha(
 
 image.write('hello world', output_path)
 
-# test for example solve
-from solver.example_solver import example_solver_pil
-
-text = example_solver_pil(output_path)
-print(f"this is {text}")
-
-from RL.env import env
-
-text = env(10,10,10, 1.0)
-print(text)
