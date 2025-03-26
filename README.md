@@ -22,6 +22,23 @@ docker build -t captchaAI-gpu .
 
 - mounting point: current dir -> `/workplace` in docker
 
+
+## RL model
+
+- Number of characters: 6 (fixed)
+- What characters: random
+
+- action space: 
+    - noise_dots_number: [0, 100]
+    - noise_dots_thickness: [1, 30]
+    - rotation_angle: [-60, 60]
+    - char_spacing:  [0.0, 1.0]
+
+
+
+
+
+
 ## Reference
 - AI solver: https://github.com/DrMahdiRezaei/Deep-CAPTCHA
 - Original Captcha generator: https://github.com/lepture/captcha
