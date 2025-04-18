@@ -1,0 +1,16 @@
+services:
+  captcha-gpu:
+    image: captcha-gpu
+    container_name: captcha-gpu
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - .:/workspace
+    ports:
+      - "8899:8888"  # for Jupyter
+      - "6006:6006"  # for TensorBoard
+    working_dir: /workspace
+    tty: true
+    stdin_open: true
+    command: bash

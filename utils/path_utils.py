@@ -21,5 +21,5 @@ def get_path_from_project_root(*path_components):
 
 if __name__ == "__main__":
     # use case
-    example_path = get_path_from_project_root("data", "raw", "example.csv")
+    example_path = get_path_from_project_root("data", "raw", "example.csv/")
     print(f"path: {example_path}")

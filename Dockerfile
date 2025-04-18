@@ -1,25 +1,28 @@
-FROM nvidia/cuda:12.2.0-base-ubuntu22.04
+FROM tensorflow/tensorflow:2.16.1-gpu
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y \
-    python3 python3-pip python3-venv git curl wget \
+    git curl wget \
     libgl1 libglib2.0-0 ffmpeg \
+    tesseract-ocr \
     && apt clean
 
-# install pip
-RUN pip3 install --upgrade pip
+RUN python --version
 
-# install general pkgs 
-RUN pip3 install \
-    tensorflow \
+RUN pip install --upgrade pip && pip install \
     keras-ocr \
     easyocr \
-    opencv-python pillow
-
-# install pytorch
-RUN pip3 install \
+    opencv-python \
+    pillow \
+    pytesseract \
     torch torchvision torchaudio \
-    --index-url https://download.pytorch.org/whl/cu118
+    stable-baselines3 gym numpy
+
+COPY requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt
+
+RUN echo 'PS1="\[\e[32m\]\u@\h:\w\$\[\e[m\] "' >> /root/.bashrc
 
 WORKDIR /workspace
+ENV PYTHONPATH=/workspace

@@ -1,5 +1,3 @@
-# you are not supposed to modify this file.
-
 import pytesseract
 from PIL import Image
 

@@ -9,16 +9,25 @@ output_path = get_path_from_project_root("results", "captcha1.png")
 
 def _random_chars(num: int) -> str:
     """
-    Generate a random string of the given length composed of letters and digits.
-
+    Generate a random string of the given length composed of lowercase letters and digits.
+    Excludes characters '1', '0', 'i', and 'o' to avoid confusion.
+    
     Args:
         num (int): The desired length of the random string.
-
+    
     Returns:
-        str: A random string of length `num` containing letters and digits.
+        str: A random string of length `num` containing lowercase letters and digits
+             (excluding '1', '0', 'i', 'o').
     """
-    chars = string.ascii_letters + string.digits
-    return ''.join(random.choices(chars, k=num))
+    # Start with lowercase letters and digits
+    allowed_chars = string.ascii_lowercase + string.digits
+    
+    # Remove the forbidden characters: '1', '0', 'i', 'o'
+    forbidden_chars = '9103sgio'
+    allowed_chars = ''.join(char for char in allowed_chars if char not in forbidden_chars)
+    
+    # Generate the random string
+    return ''.join(random.choices(allowed_chars, k=num))
 
 
 def env(noise_dots_number: int, noise_dot_thickness: int, rotation_angle: float, char_sapcing: float) -> str:
@@ -44,7 +53,7 @@ def env(noise_dots_number: int, noise_dot_thickness: int, rotation_angle: float,
         char_spacing=char_sapcing # between 0.0-1.0: 1.0 means no space.
         )
 
-    text = _random_chars(6)
+    text = _random_chars(5)
 
     image.write(text, output_path)
 
