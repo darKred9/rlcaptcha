@@ -8,8 +8,6 @@ RUN apt update && apt install -y \
     tesseract-ocr \
     && apt clean
 
-RUN python --version
-
 RUN pip install --upgrade pip && pip install \
     keras-ocr \
     easyocr \
